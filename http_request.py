@@ -1,8 +1,7 @@
 import requests
 
-book_name = "Os patetinhas"
-
 data = {
+    "id": "",
     "titulo": "",
     "editora": "",
     "cidade": "",
