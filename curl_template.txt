@@ -1,0 +1,1 @@
+curl -X --request POST --header "Content-Type: application/json" --data '{"id": "", "titulo": "Novo Livro", "editora": "Editora ABC", "cidade": "São Paulo", "ano": "2023", "pagina": "300", "isbn": "9781234567890", "assunto": ["Ficção", "Aventura"] }' http://192.168.100.5:5000/sendbook
