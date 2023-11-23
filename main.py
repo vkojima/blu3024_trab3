@@ -39,7 +39,7 @@ def get_all_books():
 
 # 1.3 Obter os dados de um livro. A aplicação deve permitir, através de uma requisição http, obter os dados 
 # do livro partir de ISBN. O código deve ser enviado na requisição http. Os dados devem ser retornados em formato JSON.
-@app.route('/getbook/isbn/<isbn>')
+@app.route('/getbook/isbn/<isbn>', methods=['GET'])
 def get_book_by_isbn(isbn):
     for livro in livros:
         if livro["isbn"] == isbn:

@@ -1,1 +1,8 @@
+@app.route('/sendbook', methods=['POST'])
 curl --request POST --header "Content-Type: application/json" --data '{"id": "", "titulo": "Novo Livro", "editora": "Editora ABC", "cidade": "São Paulo", "ano": "2023", "pagina": "300", "isbn": "9781234567890", "assunto": ["Ficção", "Aventura"] }' http://192.168.100.5:5000/sendbook
+
+@app.route('/getbooks', methods=['GET'])
+curl --request GET http://192.168.100.5:5000/getbooks
+
+@app.route('/getbook/isbn/<isbn>')
+curl --request GET http://192.168.100.5:5000/isbn/9780156012195
