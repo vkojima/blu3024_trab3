@@ -4,11 +4,11 @@ import Database_Connection
 app = Flask(__name__)
 
 # "Banco de dados" por enquanto
-livros = [{"id": "1", "titulo": "Cem Anos de Solidão", "editora": "Harper & Row", "cidade": "Nova York", "ano": "1967", "pagina": "417", "isbn": "9780060531041", "assunto": ["Realismo mágico", "Ficção latino-americana"]},
-          {"id": "2", "titulo": "1984", "editora": "Secker & Warburg", "cidade": "Londres", "ano": "1949", "pagina": "328", "isbn": "9780451524935", "assunto": ["Distopia", "Ficção política"]},
-          {"id": "3", "titulo": "O Senhor dos Anéis: A Sociedade do Anel", "editora": "Allen & Unwin", "cidade": "Londres", "ano": "1954", "pagina": "423", "isbn": "9780261103573", "assunto": ["Fantasia épica", "Literatura de aventura"]},
-          {"id": "4", "titulo": "O Pequeno Príncipe", "editora": "Reynal & Hitchcock", "cidade": "Nova York", "ano": "1943", "pagina": "96", "isbn": "9780156012195", "assunto": ["Literatura infantojuvenil", "Filosofia"]},
-          {"id": "5", "titulo": "Harry Potter e a Pedra Filosofal", "editora": "Bloomsbury Publishing", "cidade": "Londres", "ano": "1997", "pagina": "223", "isbn": "9780747532743", "assunto": ["Fantasia", "Magia", "Aventura infantojuvenil"]}]
+livros = [{"id": 1, "titulo": "Cem Anos de Solidão", "editora": "Harper & Row", "cidade": "Nova York", "ano": "1967", "pagina": "417", "isbn": "9780060531041", "assunto": ["Realismo mágico", "Ficção latino-americana"]},
+          {"id": 2, "titulo": "1984", "editora": "Secker & Warburg", "cidade": "Londres", "ano": "1949", "pagina": "328", "isbn": "9780451524935", "assunto": ["Distopia", "Ficção política"]},
+          {"id": 3, "titulo": "O Senhor dos Anéis: A Sociedade do Anel", "editora": "Allen & Unwin", "cidade": "Londres", "ano": "1954", "pagina": "423", "isbn": "9780261103573", "assunto": ["Fantasia épica", "Literatura de aventura"]},
+          {"id": 4, "titulo": "O Pequeno Príncipe", "editora": "Reynal & Hitchcock", "cidade": "Nova York", "ano": "1943", "pagina": "96", "isbn": "9780156012195", "assunto": ["Literatura infantojuvenil", "Filosofia"]},
+          {"id": 5, "titulo": "Harry Potter e a Pedra Filosofal", "editora": "Bloomsbury Publishing", "cidade": "Londres", "ano": "1997", "pagina": "223", "isbn": "9780747532743", "assunto": ["Fantasia", "Magia", "Aventura infantojuvenil"]}]
 
 
 # 1.1 Enviar dados de livros de uma biblioteca acadêmica. A aplicação deve permitir enviar ao servidor,
