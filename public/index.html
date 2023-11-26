@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Cliente do Webservice de Biblioteca</title>
+    <script>
+        // Funções para interagir com o webservice
+
+        function adicionarLivro() {
+            const titulo = document.getElementById('titulo').value;
+            const autor = document.getElementById('autor').value;
+            const isbn = document.getElementById('isbn').value;
+
+            fetch('http://localhost:3000/books', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ titulo, autor, isbn }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                alert('Livro adicionado com sucesso!');
+                // Limpa o formulário após o envio
+                document.getElementById('formAdicionarLivro').reset();
+                obterLivros(); // Atualiza a lista de livros
+            })
+            .catch(error => console.error('Erro ao adicionar livro:', error));
+        }
+
+        function obterLivros() {
+            fetch('http://localhost:3000/books')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const lista = document.getElementById('listaLivros');
+                    lista.innerHTML = ''; // Limpa a lista atual
+                    data.forEach(livro => {
+                        lista.innerHTML += `${livro.titulo} - ${livro.autor} (ISBN: ${livro.isbn})<br>`;
+                    });
+                })
+                .catch(error => console.error('Erro ao obter livros:', error));
+        }
+
+        function obterLivroPorISBN() {
+            const isbn = document.getElementById('isbnConsulta').value;
+            fetch(`http://localhost:3000/books/${isbn}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const resultadoConsulta = document.getElementById('resultadoConsulta');
+                    resultadoConsulta.textContent = `Título: ${data.titulo}, Autor: ${data.autor}, ISBN: ${data.isbn}`;
+                })
+                .catch(error => {
+                    console.error('Erro ao obter livro:', error);
+                    alert('Livro não encontrado!');
+                });
+        }
+
+        // Quando a janela carrega, obtém e exibe todos os livros
+        window.onload = () => {
+            obterLivros();
+        };
+    </script>
+</head>
+<body>
+    <h1>Cliente do Webservice de Biblioteca</h1>
+    
+    <h2>Adicionar Novo Livro</h2>
+    <form id="formAdicionarLivro" onsubmit="event.preventDefault(); adicionarLivro();">
+        <input type="text" id="titulo" placeholder="Título" required>
+        <input type="text" id="autor" placeholder="Autor" required>
+        <input type="text" id="isbn" placeholder="ISBN" required>
+        <button type="submit">Adicionar Livro</button>
+    </form>
+    
+    <h2>Consultar Livro por ISBN</h2>
+    <form onsubmit="event.preventDefault(); obterLivroPorISBN();">
+        <input type="text" id="isbnConsulta" placeholder="Digite o ISBN" required>
+        <button type="submit">Consultar</button>
+    </form>
+    <p id="resultadoConsulta"></p>
+
+    <h2>Lista de Livros</h2>
+    <div id="listaLivros"></div>
+</body>
+</html>
