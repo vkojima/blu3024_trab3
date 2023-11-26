@@ -9,14 +9,20 @@
         function adicionarLivro() {
             const titulo = document.getElementById('titulo').value;
             const autor = document.getElementById('autor').value;
+            const editora = document.getElementById('editora').value;
+            const cidade = document.getElementById('cidade').value;
+            const ano = document.getElementById('ano').value;
+            const pagina = document.getElementById('paginas').value;
             const isbn = document.getElementById('isbn').value;
+            const assuntosTexto = document.getElementById('assuntos').value;
+            const assuntos = assuntosTexto.split(',').map(assunto => assunto.trim());
 
             fetch('http://localhost:3000/books', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ titulo, autor, isbn }),
+                body: JSON.stringify({  titulo, autor, editora, cidade, ano, pagina, isbn, assunto: assuntos }),
             })
             .then(response => response.text())
             .then(data => {
