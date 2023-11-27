@@ -3,82 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <title>Cliente do Webservice de Biblioteca</title>
-    <script>
-        // Funções para interagir com o webservice
-
-        function adicionarLivro() {
-            const titulo = document.getElementById('titulo').value;
-            const autor = document.getElementById('autor').value;
-            const editora = document.getElementById('editora').value;
-            const cidade = document.getElementById('cidade').value;
-            const ano = document.getElementById('ano').value;
-            const pagina = document.getElementById('paginas').value;
-            const isbn = document.getElementById('isbn').value;
-            const assuntosTexto = document.getElementById('assuntos').value;
-            const assuntos = assuntosTexto.split(',').map(assunto => assunto.trim());
-
-            fetch('http://localhost:3000/books', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({  titulo, autor, editora, cidade, ano, pagina, isbn, assunto: assuntos }),
-            })
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);
-                alert('Livro adicionado com sucesso!');
-                // Limpa o formulário após o envio
-                document.getElementById('formAdicionarLivro').reset();
-                obterLivros(); // Atualiza a lista de livros
-            })
-            .catch(error => console.error('Erro ao adicionar livro:', error));
-        }
-
-        function obterLivros() {
-            fetch('http://localhost:3000/books')
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    const lista = document.getElementById('listaLivros');
-                    lista.innerHTML = ''; // Limpa a lista atual
-                    data.forEach(livro => {
-                        lista.innerHTML += `${livro.titulo} - ${livro.autor} (ISBN: ${livro.isbn})<br>`;
-                    });
-                })
-                .catch(error => console.error('Erro ao obter livros:', error));
-        }
-
-        function obterLivroPorISBN() {
-            const isbn = document.getElementById('isbnConsulta').value;
-            fetch(`http://localhost:3000/books/${isbn}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    const resultadoConsulta = document.getElementById('resultadoConsulta');
-                    resultadoConsulta.textContent = `Título: ${data.titulo}, Autor: ${data.autor}, ISBN: ${data.isbn}`;
-                })
-                .catch(error => {
-                    console.error('Erro ao obter livro:', error);
-                    alert('Livro não encontrado!');
-                });
-        }
-
-        // Quando a janela carrega, obtém e exibe todos os livros
-        window.onload = () => {
-            obterLivros();
-        };
-    </script>
 </head>
+
 <body>
     <h1>Cliente do Webservice de Biblioteca</h1>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.getElementById('formAdicionarLivro').addEventListener('submit', function(event) {
+                event.preventDefault();
+                adicionarLivro();
+            });
+
+            obterLivros();
+        });
+
+        // Funções para interagir com o webservice
+        function adicionarLivro() {
+                const titulo = document.getElementById('titulo').value;
+                const autor = document.getElementById('autor').value;
+                const editora = document.getElementById('editora').value;
+                const cidade = document.getElementById('cidade').value;
+                const ano = document.getElementById('ano').value;
+                const pagina = document.getElementById('pagina').value;
+                const isbn = document.getElementById('isbn').value;
+                const assuntosTexto = document.getElementById('assunto').value;
+                const assuntos = assuntosTexto.split(',').map(assunto => assunto.trim());
+
+                fetch('http://localhost:3000/books', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({  titulo, autor, editora, cidade, ano, pagina, isbn, assunto: assuntos }),
+                })
+
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error('Falha na rede ao tentar adicionar o livro!');
+                    }
+                    return response.json(); // ou response.text() se o servidor realmente responder com texto
+                })
+
+                .then(data => {
+                    console.log(data);
+                    alert('Livro adicionado com sucesso!');
+                    // Limpa o formulário após o envio
+                    document.getElementById('formAdicionarLivro').reset();
+                    obterLivros(); // Atualiza a lista de livros
+                })
+
+                .catch(error => console.error('Erro ao adicionar livro:', error));
+            }
+
+            // Função para obter e mostrar todos os livros com informações limitadas
+            function obterLivros() {
+                fetch('http://localhost:3000/books')
+                    .then(response => response.json())
+                    .then(data => {
+                        const lista = document.getElementById('listaLivros');
+                        lista.innerHTML = ''; // Limpa a lista atual
+                        data.forEach(livro => {
+                            lista.innerHTML += `Título: ${livro.titulo}, Autor: ${livro.autor}, ISBN: ${livro.isbn}<br>`;
+                        });
+                    })
+                    .catch(error => console.error('Erro ao obter livros:', error));
+            }
+
+            // Função para buscar um livro específico por ISBN e mostrar todos os dados
+            function obterLivroPorISBN() {
+                const isbn = document.getElementById('isbnConsulta').value;
+                fetch(`http://localhost:3000/books/${isbn}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const resultadoConsulta = document.getElementById('resultadoConsulta');
+                        resultadoConsulta.innerHTML = `
+                            <strong>Título:</strong> ${data.titulo}<br>
+                            <strong>Autor:</strong> ${data.autor}<br>
+                            <strong>Editora:</strong> ${data.editora}<br>
+                            <strong>Cidade:</strong> ${data.cidade}<br>
+                            <strong>Ano:</strong> ${data.ano}<br>
+                            <strong>Páginas:</strong> ${data.pagina}<br>
+                            <strong>ISBN:</strong> ${data.isbn}<br>
+                            <strong>Assunto:</strong> ${data.assunto.join(', ')}
+                        `;
+                    })
+                    .catch(error => {
+                        console.error('Erro ao obter livro:', error);
+                        alert('Livro não encontrado!');
+                    });
+            }
+
+            function excluirLivro() {
+                const isbn2 = document.getElementById('isbnExcluir').value;
+                fetch(`http://localhost:3000/books/${isbn2}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Falha ao excluir o livro.');
+                    }
+                    return response.text();
+                })
+                .then(() => {
+                    alert('Livro excluído com sucesso.');
+                    document.getElementById('excluirLivro').reset();
+                    obterLivros(); // Atualiza a lista de livros após a exclusão
+                })
+                .catch(error => {
+                    console.error('Erro ao excluir livro:', error);
+                    alert('Erro ao excluir livro: ' + error.message);
+                });
+            }
+
+            // Quando a janela carrega, obtém e exibe todos os livros
+            window.onload = () => {
+                obterLivros();
+            };
+
+    </script>
     
     <h2>Adicionar Novo Livro</h2>
-    <form id="formAdicionarLivro" onsubmit="event.preventDefault(); adicionarLivro();">
+    <form id="formAdicionarLivro">
         <input type="text" id="titulo" placeholder="Título" required>
         <input type="text" id="autor" placeholder="Autor" required>
+        <input type="text" id="editora" placeholder="Editora" required>
+        <input type="text" id="cidade" placeholder="Cidade" required>
+        <input type="text" id="ano" placeholder="Ano" required>
+        <input type="text" id="pagina" placeholder="Páginas" required>
         <input type="text" id="isbn" placeholder="ISBN" required>
-        <button type="submit">Adicionar Livro</button>
+        <input type="text" id="assunto" placeholder="Assuntos (separe por ',')" required>
+        <button type="submit" style="margin-top: 10px;">Adicionar Livro</button>
     </form>
     
     <h2>Consultar Livro por ISBN</h2>
@@ -88,7 +144,14 @@
     </form>
     <p id="resultadoConsulta"></p>
 
+    <h2>Excluir Livro por ISBN</h2>
+    <form onsubmit="event.preventDefault(); excluirLivro();">
+        <input type="text" id="isbnExcluir" placeholder="Digite o ISBN" required>
+        <button type="submit">Excluir</button>
+    </form>
+
     <h2>Lista de Livros</h2>
     <div id="listaLivros"></div>
 </body>
 </html>
+
