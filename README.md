@@ -19,29 +19,22 @@ Este projeto é um sistema simples de gerenciamento de biblioteca acadêmica des
 
 ### Instalação
 - Clone o repositório: git clone https://github.com/vkojima/blu3024_trab3.git
-Navegue até a pasta do projeto e instale as dependências:
-sh
-Copy code
+- Navegue até a pasta do projeto e instale as dependências:
+```
 cd caminho/para/o/projeto
 npm install
-Executando o Servidor
+```
+
+### Executando o Servidor
 Dentro da pasta do projeto, execute:
-sh
-Copy code
+```
 node app.js
-O servidor estará rodando em http://localhost:3000.
-Acessando a Aplicação
+```
+O servidor estará rodando localmente na porta 3000.
+
+### Acessando a Aplicação
 Abra o navegador e acesse http://localhost:3000 para interagir com a aplicação.
 
-Estrutura do Projeto
-app.js: Arquivo principal do servidor Node.js/Express.
-public/: Pasta contendo arquivos estáticos para o cliente (HTML, JS).
-Contribuições
-Contribuições são sempre bem-vindas! Para contribuir:
-
-Faça um Fork do projeto
-Crie uma Branch para sua Feature (git checkout -b feature/AmazingFeature)
-Adicione suas mudanças (git add .)
-Commit suas mudanças (git commit -m 'Add some AmazingFeature')
-Push para a Branch (git push origin feature/AmazingFeature)
-Abra um Pull Request
+## Estrutura do Projeto
+- app.js: Arquivo principal do servidor Node.js/Express.
+- public/: Pasta contendo arquivos estáticos para o cliente (HTML, JS).
