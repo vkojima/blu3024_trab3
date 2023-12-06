@@ -38,28 +38,6 @@ let books = [
             "isbn": "9780261103573",
             "assunto": ["Fantasia épica", "Literatura de aventura"]
         },
-        {
-            "id": 4,
-            "titulo": "O Pequeno Príncipe",
-            "autor": "Antoine de Saint-Exupéry",
-            "editora": "Reynal & Hitchcock",
-            "cidade": "Nova York",
-            "ano": "1943",
-            "pagina": "96",
-            "isbn": "9780156012195",
-            "assunto": ["Literatura infantojuvenil", "Filosofia"]
-        },
-        {
-            "id": 5,
-            "titulo": "Harry Potter e a Pedra Filosofal",
-            "autor": "J.K. Rowling",
-            "editora": "Bloomsbury Publishing",
-            "cidade": "Londres",
-            "ano": "1997",
-            "pagina": "223",
-            "isbn": "9780747532743",
-            "assunto": ["Fantasia", "Magia", "Aventura infantojuvenil"]
-        }   
 ]; // Armazenamento temporário
 
 app.use(express.static('public'));
